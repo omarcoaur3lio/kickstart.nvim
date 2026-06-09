@@ -99,7 +99,7 @@ do
   vim.g.maplocalleader = ' '
 
   -- Set to true if you have a Nerd Font installed and selected in the terminal
-  vim.g.have_nerd_font = false
+  vim.g.have_nerd_font = true
 
   -- [[ Setting options ]]
   --  See `:help vim.o`
@@ -179,6 +179,22 @@ do
   --  See `:help hlsearch`
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+  -- Close buffer safely without closing the window
+  vim.keymap.set('n', '<leader>bd', function()
+    local bd = require('mini.bufremove').delete
+    if vim.bo.modified then
+      local choice = vim.fn.confirm(('Save changes to %q?'):format(vim.fn.bufname()), "&Yes\n&No\n&Cancel")
+      if choice == 1 then
+        vim.cmd.write()
+        bd(0, false)
+      elseif choice == 2 then
+        bd(0, true)
+      end
+    else
+      bd(0, false)
+    end
+  end, { desc = '[B]uffer [D]elete' })
+
   -- Diagnostic Config & Keymaps
   --  See `:help vim.diagnostic.Opts`
   vim.diagnostic.config {
@@ -227,6 +243,12 @@ do
   vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
   vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
   vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+
+  -- Resize windows using CTRL + OPTION + arrows (to avoid macOS conflicts)
+  vim.keymap.set('n', '<M-C-Up>', '<cmd>resize +2<cr>', { desc = 'Increase window height' })
+  vim.keymap.set('n', '<M-C-Down>', '<cmd>resize -2<cr>', { desc = 'Decrease window height' })
+  vim.keymap.set('n', '<M-C-Left>', '<cmd>vertical resize +2<cr>', { desc = 'Decrease window width' })
+  vim.keymap.set('n', '<M-C-Right>', '<cmd>vertical resize -2<cr>', { desc = 'Increase window width' })
 
   -- NOTE: Some terminals have colliding keymaps or are not able to send distinct keycodes
   -- vim.keymap.set("n", "<C-S-h>", "<C-w>H", { desc = "Move window to the left" })
@@ -383,18 +405,46 @@ do
   -- change the command under that to load whatever the name of that colorscheme is.
   --
   -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-  vim.pack.add { gh 'folke/tokyonight.nvim' }
-  ---@diagnostic disable-next-line: missing-fields
-  require('tokyonight').setup {
-    styles = {
-      comments = { italic = false }, -- Disable italics in comments
-    },
-  }
+  -- vim.pack.add { gh 'Yazeed1s/oh-lucy.nvim' }
+
+  -- vim.pack.add { gh 'olivercederborg/poimandres.nvim' }
+  -- require('poimandres').setup {}
+
+  -- vim.pack.add { gh 'folke/tokyonight.nvim' }
+  -- ---@diagnostic disable-next-line: missing-fields
+  -- require('tokyonight').setup {
+  --   styles = {
+  --     comments = { italic = false }, -- Disable italics in comments
+  --   },
+  -- }
+
+  -- Local Roteki Theme (Development Mode)
+  -- We add the path directly to the runtimepath to see changes instantly without copying
+  vim.opt.rtp:prepend('/Users/marco/workplace/roteki-theme-nvim')
+  -- vim.pack.add { gh 'omarcoaur3lio/roteki-theme.nvim' }
+
+  -- Shortcut to reload the theme during development
+  vim.keymap.set('n', '<leader>rr', function()
+    for name, _ in pairs(package.loaded) do
+      if name:match('^roteki') then
+        package.loaded[name] = nil
+      end
+    end
+    vim.cmd.colorscheme 'roteki'
+    vim.notify('Tema Roteki recarregado!', vim.log.levels.INFO)
+  end, { desc = '[R]eload [R]oteki Theme' })
 
   -- Load the colorscheme here.
   -- Like many other themes, this one has different styles, and you could load
   -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-  vim.cmd.colorscheme 'tokyonight-night'
+  -- vim.cmd.colorscheme 'oh-lucy'
+  -- vim.cmd.colorscheme 'poimandres'
+
+  -- Custom background color
+  -- vim.api.nvim_set_hl(0, 'Normal', { bg = '#141414' })
+  -- vim.api.nvim_set_hl(0, 'NormalFloat', { bg = '#141414' })
+  -- vim.cmd.colorscheme 'tokyonight-night'
+  vim.cmd.colorscheme 'roteki'
 
   -- Highlight todo, notes, etc in comments
   vim.pack.add { gh 'folke/todo-comments.nvim' }

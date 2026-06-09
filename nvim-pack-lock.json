@@ -51,9 +51,29 @@
       "src": "https://github.com/nvim-treesitter/nvim-treesitter",
       "version": "'main'"
     },
+    "nvim-web-devicons": {
+      "rev": "dfbfaa967a6f7ec50789bead7ef87e336c1fa63c",
+      "src": "https://github.com/nvim-tree/nvim-web-devicons"
+    },
+    "oh-lucy.nvim": {
+      "rev": "2d94e9b03efe4c50f4653b6f2b7b200d970fe1aa",
+      "src": "https://github.com/Yazeed1s/oh-lucy.nvim"
+    },
     "plenary.nvim": {
       "rev": "74b06c6c75e4eeb3108ec01852001636d85a932b",
       "src": "https://github.com/nvim-lua/plenary.nvim"
+    },
+    "poimandres.nvim": {
+      "rev": "a488957d803943a4201ac3b774913fcafa9e6b3a",
+      "src": "https://github.com/olivercederborg/poimandres.nvim"
+    },
+    "roteki-theme-nvim": {
+      "rev": "c668c0284d71f19bbf418511a7937d5f9db43af1",
+      "src": "/Users/marco/workplace/roteki-theme-nvim"
+    },
+    "roteki-theme.nvim": {
+      "rev": "c668c0284d71f19bbf418511a7937d5f9db43af1",
+      "src": "https://github.com/omarcoaur3lio/roteki-theme.nvim"
     },
     "telescope-fzf-native.nvim": {
       "rev": "b25b749b9db64d375d782094e2b9dce53ad53a40",
