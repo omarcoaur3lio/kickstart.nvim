@@ -229,6 +229,9 @@ do
   -- or just use <C-\><C-n> to exit terminal mode
   vim.keymap.set('t', '<Esc><Esc>', '<C-\\><C-n>', { desc = 'Exit terminal mode' })
 
+  -- Open a terminal in a horizontal split
+  vim.keymap.set('n', '<leader>st', '<cmd>split | terminal<CR>', { desc = '[S]how [T]erminal' })
+
   -- TIP: Disable arrow keys in normal mode
   -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
   -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
@@ -557,10 +560,14 @@ do
   local builtin = require 'telescope.builtin'
   vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
   vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
-  vim.keymap.set('n', '<leader>sf', builtin.find_files, { desc = '[S]earch [F]iles' })
+  vim.keymap.set('n', '<leader>sf', function() builtin.find_files { hidden = true } end, { desc = '[S]earch [F]iles (including hidden)' })
   vim.keymap.set('n', '<leader>ss', builtin.builtin, { desc = '[S]earch [S]elect Telescope' })
   vim.keymap.set({ 'n', 'v' }, '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-  vim.keymap.set('n', '<leader>sg', builtin.live_grep, { desc = '[S]earch by [G]rep' })
+  vim.keymap.set('n', '<leader>sg', function()
+    builtin.live_grep {
+      additional_args = function() return { '--hidden' } end,
+    }
+  end, { desc = '[S]earch by [G]rep (including hidden)' })
   vim.keymap.set('n', '<leader>sd', builtin.diagnostics, { desc = '[S]earch [D]iagnostics' })
   vim.keymap.set('n', '<leader>sr', builtin.resume, { desc = '[S]earch [R]esume' })
   vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
