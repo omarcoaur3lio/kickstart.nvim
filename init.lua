@@ -232,6 +232,10 @@ do
   -- Open a terminal in a horizontal split
   vim.keymap.set('n', '<leader>st', '<cmd>split | terminal<CR>', { desc = '[S]how [T]erminal' })
 
+  -- Center search results
+  vim.keymap.set('n', 'n', 'nzzzv')
+  vim.keymap.set('n', 'N', 'Nzzzv')
+
   -- TIP: Disable arrow keys in normal mode
   -- vim.keymap.set('n', '<left>', '<cmd>echo "Use h to move!!"<CR>')
   -- vim.keymap.set('n', '<right>', '<cmd>echo "Use l to move!!"<CR>')
