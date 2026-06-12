@@ -427,8 +427,8 @@ do
 
   -- Local Roteki Theme (Development Mode)
   -- We add the path directly to the runtimepath to see changes instantly without copying
-  vim.opt.rtp:prepend('/Users/marco/workplace/roteki-theme-nvim')
-  -- vim.pack.add { gh 'omarcoaur3lio/roteki-theme.nvim' }
+  -- vim.opt.rtp:prepend('/Users/marco/workplace/roteki-theme-nvim')
+  vim.pack.add { gh 'omarcoaur3lio/roteki-theme.nvim' }
 
   -- Shortcut to reload the theme during development
   vim.keymap.set('n', '<leader>rr', function()
